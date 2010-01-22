@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="XSD->JAXB->XSD->..." default="generate" basedir=".">
+	
+	<description>Generate chain of JAXB and XSD from initial XSD</description>
+	
+	<property name="src" location="src"/>
+	<property name="target" location="target"/>
+	
+	<taskdef name="schemagen" classname="com.sun.tools.jxc.SchemaGenTask">
+		<classpath>
+			<fileset dir="../lib" includes="*.jar" />
+		</classpath>
+	</taskdef>
+	
+	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+		<classpath>
+			<fileset dir="../lib" includes="*.jar" />
+		</classpath>
+	</taskdef>
+	
+	
+	<target name="init">
+		<mkdir dir="${target}"/>
+		<mkdir dir="${target}/1"/>
+		<mkdir dir="${target}/2"/>
+		<mkdir dir="${target}/3"/>
+		<mkdir dir="${target}/4"/>
+	</target>
+	
+	<target name="generate" depends="init">
+		
+		<xjc package="no.bekk.open.memberservice.message" destdir="${target}/1">
+			<schema dir="${src}" includes="*.xsd" />
+		</xjc>
+		
+		<schemagen srcdir="${target}/1" destdir="${target}/2">
+			<schema namespace="http://open.bekk.no/memberservice" file="jaxb.xsd" />
+		</schemagen>
+		
+		<xjc package="no.bekk.open.memberservice.message" destdir="${target}/3">
+			<schema dir="${target}/2" includes="*.xsd" />
+		</xjc>
+		
+		<schemagen srcdir="${target}/3" destdir="${target}/4">
+			<schema namespace="http://open.bekk.no/memberservice" file="jaxb.xsd" />
+		</schemagen>
+	
+	</target>
+	
+	<target name="clean" description="clean up">
+		<delete dir="${target}"/>
+	</target>
+
+</project>
+
