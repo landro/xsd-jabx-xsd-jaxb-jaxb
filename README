@@ -1,3 +1,2 @@
 Code example converting XSD to JAXB back and forth to see what information (validation/restrictions) is lost.
-Also demonstrates why @XmlRootElement are not always generated.
-http://weblogs.java.net/blog/2006/03/03/why-does-jaxb-put-xmlrootelement-sometimes-not-always
+Also demonstrates why @XmlRootElement are not always generated. See http://weblogs.java.net/blog/2006/03/03/why-does-jaxb-put-xmlrootelement-sometimes-not-always for an explanation.
